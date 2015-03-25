@@ -43,5 +43,6 @@ $ docker run -ti --rm -v $PWD:/source wictory/parallax_edu git clone https://git
 $ cd ParallaxEdu2015-Ex2
 $ ./compile_capture_show.sh # Compile capture_show.cpp
 $ ./run_capture_show_webcam.sh # Run the program using the webcam (only works on Linux)
+$ ./download_video.sh # Download a video if you can't run with webcam
+$ ./run_capture_show.sh # Run the program without webcam
 ```
-
