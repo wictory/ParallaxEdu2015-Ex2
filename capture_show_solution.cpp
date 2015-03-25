@@ -61,6 +61,7 @@ int main( int argc, const char** argv )
 
     Queue<MyFrame> q1;
     Queue<MyFrame> q2;
+    Queue<MyFrame> q3;
 
     if( capture.isOpened() )
     {
@@ -92,34 +93,45 @@ int main( int argc, const char** argv )
 			cout << "s2" << endl;
 			frame.pr([](Mat &m) {
 				cvtColor(m, m, CV_RGB2GRAY);
-				Canny(m, m, 20, 20, 3);
 			    });
 			q2.push(std::move(frame));
 		    }
 		    cout << "Stopping s2" << endl;
 		}));
 
+	threads.push_back(std::thread([&]() {
+		    while (still_running) {
+			auto&& frame = q2.pop();
+			cout << "s3" << endl;
+			frame.pr([](Mat &m) {
+				Canny(m, m, 20, 20, 3);
+			    });
+			q3.push(std::move(frame));
+		    }
+		    cout << "Stopping s3" << endl;
+		}));
+
 	if (have_camera) {
 	    threads.push_back(std::thread([&]() {
 			namedWindow("result");
 			while (still_running) {
-			    auto frame = q2.pop().get();
-			    cout << "s3" << endl;
+			    auto frame = q3.pop().get();
+			    cout << "s4" << endl;
 			    imshow("result", frame);
 			    if (waitKey(10) >= 0) {
 				still_running = false;
 				break;
 			    }
 			}
-			cout << "Stopping s3" << endl;
+			cout << "Stopping s4" << endl;
 		    }));
 	} else {
 	    threads.push_back(std::thread([&]() {
 			while (still_running) {
-			    auto frame = q2.pop().get();
-			    cout << "s3" << endl;
+			    auto frame = q3.pop().get();
+			    cout << "s4" << endl;
 			}
-			cout << "Stopping s3" << endl;
+			cout << "Stopping s4" << endl;
 		    }));
 	}
 
