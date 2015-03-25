@@ -32,6 +32,9 @@ You can install these components independently on your own, or use a docker imag
 * To use the docker image, [Docker](https://docs.docker.com/installation/) needs to be installed. Start docker using terminal in linux based systems or [boot2docker](http://boot2docker.io) in non-linux based systems. When running boot2docker, a terminal window pops up.
 
 * To run the exercise you need to bind a directory to your docker container. You should preferably make a new directory, enter it and start your docker container.
+
+* If things does not work, try first to use sudo :P
+
 ```bash
 $ cd $HOME
 $ mkdir parallax_education_day
